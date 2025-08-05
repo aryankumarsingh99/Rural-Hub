@@ -1,0 +1,53 @@
+### Test Services API
+GET http://localhost:3000/api/services
+
+### Test Products API
+GET http://localhost:3000/api/products
+
+### Test News API
+GET http://localhost:3000/api/news
+
+### Test Contact API (GET)
+GET http://localhost:3000/api/contact
+
+### Test Contact API (POST)
+POST http://localhost:3000/api/contact
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "subject": "Test Subject",
+  "message": "This is a test message from REST Client",
+  "category": "general"
+}
+
+### Test Register API
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe", 
+  "email": "john.doe.test@example.com",
+  "password": "password123",
+  "phone": "1234567890"
+}
+
+### Test Login API
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe.test@example.com",
+  "password": "password123"
+}
+
+### Test Services with Filter
+GET http://localhost:3000/api/services?category=agriculture
+
+### Test Products with Search
+GET http://localhost:3000/api/products?search=organic
+
+### Test News with Category
+GET http://localhost:3000/api/news?category=weather&limit=3
