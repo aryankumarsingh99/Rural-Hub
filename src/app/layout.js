@@ -1,7 +1,7 @@
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import { AuthProvider } from '@/context/AuthContext';
-import { CartProvider } from '@/context/CartContext';
+import { CartProvider } from '@/context/CartContext'; // Fixed: CartContext not CartProvider
 
 export const metadata = {
   title: 'Rural Hub',
