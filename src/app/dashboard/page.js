@@ -176,7 +176,7 @@ export default function DashboardPage() {
                             <span className="ml-2 text-sm">{getStatusIcon(booking.status)}</span>
                           </h3>
                           <p className="text-gray-600">
-                            📅 Placed on {new Date(booking.createdAt).toLocaleDateString('en-US', {
+                            📅 Placed on {new Date(booking.createdAt).toLocaleDateString('en-GB', {
                               year: 'numeric',
                               month: 'long',
                               day: 'numeric',
