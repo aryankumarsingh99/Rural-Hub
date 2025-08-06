@@ -207,3 +207,66 @@ const Contact = () => {
 };
 
 export default Contact;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// [17:59:49.087] Running build in Washington, D.C., USA (East) – iad1
+// [17:59:49.088] Build machine configuration: 2 cores, 8 GB
+// [17:59:49.110] Cloning github.com/aryankumarsingh99/Rural-Hub (Branch: main, Commit: 56a9d31)
+// [17:59:49.290] Previous build caches not available
+// [17:59:49.536] Cloning completed: 426.000ms
+// [17:59:52.109] Running "vercel build"
+// [17:59:52.557] Vercel CLI 44.7.2
+// [17:59:52.941] Installing dependencies...
+// [18:00:02.369] 
+// [18:00:02.370] added 130 packages in 9s
+// [18:00:02.370] 
+// [18:00:02.371] 26 packages are looking for funding
+// [18:00:02.371]   run `npm fund` for details
+// [18:00:02.421] Detected Next.js version: 15.4.5
+// [18:00:02.423] Running "npm run build"
+// [18:00:02.533] 
+// [18:00:02.534] > shopping-app@0.1.0 build
+// [18:00:02.534] > next build
+// [18:00:02.534] 
+// [18:00:03.314] Attention: Next.js now collects completely anonymous telemetry regarding usage.
+// [18:00:03.315] This information is used to shape Next.js' roadmap and prioritize features.
+// [18:00:03.315] You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+// [18:00:03.315] https://nextjs.org/telemetry
+// [18:00:03.315] 
+// [18:00:03.418]    ▲ Next.js 15.4.5
+// [18:00:03.418] 
+// [18:00:03.460]    Creating an optimized production build ...
+// [18:00:17.308]  ✓ Compiled successfully in 10.0s
+// [18:00:17.313]    Linting and checking validity of types ...
+// [18:00:24.670]    Collecting page data ...
+//  [18:00:25.255] Error: Please define the MONGODB_URI environment variable inside .env.local
+//  [18:00:25.256]     at 74877 (.next/server/app/api/auth/login/route.js:1:7995)
+//  [18:00:25.256]     at c (.next/server/webpack-runtime.js:1:127)
+//  [18:00:25.256]     at 56528 (.next/server/app/api/auth/login/route.js:1:1769)
+//  [18:00:25.256]     at c (.next/server/webpack-runtime.js:1:127)
+// [18:00:25.257]     at <unknown> (.next/server/app/api/auth/login/route.js:1:8690)
+// [18:00:25.257]     at c.X (.next/server/webpack-runtime.js:1:1191)
+//  [18:00:25.257]     at <unknown> (.next/server/app/api/auth/login/route.js:1:8665)
+// [18:00:25.257]     at Object.<anonymous> (.next/server/app/api/auth/login/route.js:1:8722)
+// [18:00:25.259] 
+//  [18:00:25.260] > Build error occurred
+// [18:00:25.263] [Error: Failed to collect page data for /api/auth/login] {
+//  [18:00:25.263]   type: 'Error'
+//  [18:00:25.263] }
+//  [18:00:25.286] Error: Command "npm run build" exited with 1                                               
