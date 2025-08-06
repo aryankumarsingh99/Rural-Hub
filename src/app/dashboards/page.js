@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { formatDate } from '@/lib/dateUtils'; // Import the date utility
 
 export default function UserDashboard() {
   const [bookings, setBookings] = useState([]);
@@ -63,7 +62,7 @@ export default function UserDashboard() {
                       Order #{booking.orderNumber}
                     </h3>
                     <p className="text-gray-600">
-                      📅 Placed on {formatDate(booking.createdAt)}
+                      📅 Placed on {new Date(booking.createdAt).toLocaleDateString()}
                     </p>
                   </div>
                   <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">
