@@ -2,7 +2,6 @@
 import User from '@/models/User';
 import connectDB from '@/lib/connectDB';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
@@ -20,7 +19,7 @@ export async function POST(request) {
     if (!firstName || !lastName || !email || !password) {
       console.log('❌ Validation failed: Missing required fields');
       return NextResponse.json(
-        { error: "All required fields must be filled" },
+        { success: false, error: 'All fields are required' },
         { status: 400 }
       );
     }
@@ -28,7 +27,7 @@ export async function POST(request) {
     if (password.length < 6) {
       console.log('❌ Validation failed: Password too short');
       return NextResponse.json(
-        { error: "Password must be at least 6 characters" },
+        { success: false, error: 'Password must be at least 6 characters' },
         { status: 400 }
       );
     }
@@ -39,60 +38,59 @@ export async function POST(request) {
     if (existingUser) {
       console.log('❌ User already exists');
       return NextResponse.json(
-        { error: "User already exists with this email" },
-        { status: 409 }
+        { success: false, error: 'User already exists with this email' },
+        { status: 400 }
       );
     }
 
     // Hash password
     console.log('🔐 Hashing password...');
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create user
     console.log('👤 Creating new user...');
-    const newUser = new User({
-      firstName,
-      lastName,
-      email: email.toLowerCase(),
+    const user = new User({
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      email: email.toLowerCase().trim(),
       password: hashedPassword,
-      phone: phone || '',
+      phone: phone?.trim() || ''
     });
 
-    await newUser.save();
+    await user.save();
     console.log('✅ User created successfully');
 
-    // Generate JWT token
-    console.log('🎫 Generating JWT token...');
-    const token = jwt.sign(
-      { userId: newUser._id },
-      process.env.JWT_SECRET,
-      { expiresIn: '7d' }
-    );
-
-    // Return user data without password
+    // Return success without password
     const userResponse = {
-      _id: newUser._id,
-      firstName: newUser.firstName,
-      lastName: newUser.lastName,
-      email: newUser.email,
-      phone: newUser.phone,
-      role: newUser.role,
-      createdAt: newUser.createdAt,
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phone: user.phone
     };
 
     console.log('🎉 Registration successful');
     return NextResponse.json({
       success: true,
-      message: "User registered successfully",
-      token,
+      message: 'User registered successfully',
       user: userResponse
-    }, { status: 201 });
+    });
 
   } catch (error) {
     console.error('💥 Registration error:', error);
     console.error('Error stack:', error.stack);
+    
+    // Handle specific MongoDB errors
+    if (error.code === 11000) {
+      return NextResponse.json(
+        { success: false, error: 'Email already exists' },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
+      { success: false, error: 'Internal server error. Please try again.' },
       { status: 500 }
     );
   }
