@@ -1,2 +1,15 @@
-// mongodb+srv://aryansingh:vxaboO1MXlS8kc9d@cluster.mongodb.net/ruralhub?retryWrites=true&w=majority
-//  MONGODB_URI=mongodb+srv://aryansingh:vxaboO1MXlS8kc9v@cluster0.jfyfxle.mongodb.net/Rural-Hub?retryWrites=true&w=majority
+// src/utils/animations.js
+// Remove the MongoDB URI from here - it should only be in Vercel environment variables
+export const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 }
+};
+
+export const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};

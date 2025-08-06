@@ -21,15 +21,13 @@ const connectDB = async () => {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      console.log('MongoDB connected successfully');
+      console.log('✅ MongoDB connected successfully');
       return mongoose;
     }).catch((error) => {
-      console.error('MongoDB connection error:', error);
+      console.error('❌ MongoDB connection error:', error);
       throw error;
     });
   }

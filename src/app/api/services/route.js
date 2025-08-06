@@ -1,10 +1,9 @@
 // src/app/api/services/route.js
 import { NextResponse } from 'next/server';
 
-// Sample services data
 const services = [
   {
-    id: 1,
+    _id: "1",
     title: "Healthcare Services",
     description: "Comprehensive medical care and health services for rural communities",
     icon: "🏥",
@@ -12,10 +11,12 @@ const services = [
     provider: "Rural Health Center",
     contact: "+1-555-0101",
     location: "Main Street Medical Center",
-    availability: "24/7 Emergency, Mon-Fri 8AM-6PM Regular"
+    availability: "24/7 Emergency, Mon-Fri 8AM-6PM Regular",
+    price: 50,
+    type: "service"
   },
   {
-    id: 2,
+    _id: "2",
     title: "Agricultural Support",
     description: "Farming assistance, crop consulting, and agricultural equipment rental",
     icon: "🌾",
@@ -23,10 +24,12 @@ const services = [
     provider: "Farm Support Co-op",
     contact: "+1-555-0102",
     location: "Agricultural Extension Office",
-    availability: "Mon-Sat 6AM-8PM"
+    availability: "Mon-Sat 6AM-8PM",
+    price: 75,
+    type: "service"
   },
   {
-    id: 3,
+    _id: "3",
     title: "Educational Services",
     description: "Adult education, skill development, and literacy programs",
     icon: "📚",
@@ -34,10 +37,12 @@ const services = [
     provider: "Rural Learning Center",
     contact: "+1-555-0103",
     location: "Community Learning Hub",
-    availability: "Mon-Fri 9AM-5PM, Sat 10AM-2PM"
+    availability: "Mon-Fri 9AM-5PM, Sat 10AM-2PM",
+    price: 30,
+    type: "service"
   },
   {
-    id: 4,
+    _id: "4",
     title: "Transportation Services",
     description: "Local transport, delivery services, and emergency transportation",
     icon: "🚗",
@@ -45,7 +50,22 @@ const services = [
     provider: "Rural Transit Authority",
     contact: "+1-555-0104",
     location: "Central Transit Hub",
-    availability: "Daily 5AM-11PM"
+    availability: "Daily 5AM-11PM",
+    price: 25,
+    type: "service"
+  },
+  {
+    _id: "5",
+    title: "Banking & Financial Services",
+    description: "Mobile banking, microfinance, and financial literacy programs",
+    icon: "🏦",
+    category: "finance",
+    provider: "Rural Credit Union",
+    contact: "+1-555-0105",
+    location: "Community Bank Branch",
+    availability: "Mon-Fri 9AM-4PM",
+    price: 0,
+    type: "service"
   }
 ];
 
@@ -72,7 +92,10 @@ export async function GET(request) {
 
     return NextResponse.json({
       success: true,
-      data: filteredServices
+      data: {
+        services: filteredServices,
+        total: filteredServices.length
+      }
     });
   } catch (error) {
     console.error('Services fetch error:', error);
