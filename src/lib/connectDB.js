@@ -9,7 +9,7 @@ console.log('🔍 MONGODB_URI status:', MONGODB_URI ? 'Found' : 'Missing');
 
 // Don't throw error during build, only during runtime
 if (!MONGODB_URI && typeof window === 'undefined') {
-  console.error('❌ MONGODB_URI environment variable is not defined');
+  console.error(' MONGODB_URI environment variable is not defined');
 }
 
 let cached = global.mongoose;
@@ -24,7 +24,7 @@ const connectDB = async () => {
   // Check for MONGODB_URI at runtime
   if (!MONGODB_URI) {
     const error = new Error('MONGODB_URI environment variable is not defined. Please check your Vercel environment variables.');
-    console.error('❌', error.message);
+    console.error('', error.message);
     console.error('Available env vars:', Object.keys(process.env).filter(key => key.includes('MONGO')));
     throw error;
   }
