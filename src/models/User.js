@@ -48,12 +48,5 @@ const UserSchema = new mongoose.Schema({
 // Create index for email (helps with performance and ensures uniqueness)
 UserSchema.index({ email: 1 });
 
-// Ensure the model is only compiled once
-let User;
-try {
-  User = mongoose.model('User');
-} catch (error) {
-  User = mongoose.model('User', UserSchema);
-}
-
-export default User;
+// Use the standard Next.js pattern for model compilation
+export default mongoose.models.User || mongoose.model('User', UserSchema);
