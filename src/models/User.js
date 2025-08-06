@@ -45,7 +45,15 @@ const UserSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Create index for email
+// Create index for email (helps with performance and ensures uniqueness)
 UserSchema.index({ email: 1 });
 
-export default mongoose.models.User || mongoose.model('User', UserSchema);
+// Ensure the model is only compiled once
+let User;
+try {
+  User = mongoose.model('User');
+} catch (error) {
+  User = mongoose.model('User', UserSchema);
+}
+
+export default User;

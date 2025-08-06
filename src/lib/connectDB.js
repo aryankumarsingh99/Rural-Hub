@@ -31,22 +31,27 @@ const connectDB = async () => {
     const opts = {
       bufferCommands: false,
       maxPoolSize: 10,
-      serverSelectionTimeoutMS: 10000, // Increased timeout
+      serverSelectionTimeoutMS: 15000, // Increased timeout
       socketTimeoutMS: 45000,
+      family: 4 // Use IPv4, skip trying IPv6
     };
 
-    console.log('🔄 Creating new database connection to:', MONGODB_URI.substring(0, 50) + '...');
+    console.log('🔄 Creating new database connection...');
+    console.log('🔍 MongoDB URI (first 50 chars):', MONGODB_URI.substring(0, 50) + '...');
     
     cached.promise = mongoose.connect(MONGODB_URI, opts)
       .then((mongoose) => {
         console.log('✅ MongoDB connected successfully');
+        console.log('📊 Connection readyState:', mongoose.connection.readyState);
+        console.log('🏷️ Database name:', mongoose.connection.name);
         return mongoose;
       })
       .catch((error) => {
-        console.error('❌ MongoDB connection error:', {
+        console.error('❌ MongoDB connection error details:', {
           message: error.message,
           name: error.name,
-          code: error.code
+          code: error.code,
+          codeName: error.codeName
         });
         throw error;
       });
@@ -59,7 +64,7 @@ const connectDB = async () => {
     console.error('❌ Failed to connect to MongoDB:', {
       message: e.message,
       name: e.name,
-      stack: e.stack
+      code: e.code
     });
     throw e;
   }
