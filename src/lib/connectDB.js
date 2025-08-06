@@ -3,8 +3,9 @@ import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+// Don't throw error during build, only during runtime
+if (!MONGODB_URI && typeof window === 'undefined') {
+  console.error('❌ MONGODB_URI environment variable is not defined');
 }
 
 let cached = global.mongoose;
@@ -14,8 +15,15 @@ if (!cached) {
 }
 
 const connectDB = async () => {
+  // Check for MONGODB_URI at runtime
+  if (!MONGODB_URI) {
+    const error = new Error('MONGODB_URI environment variable is not defined. Please check your Vercel environment variables.');
+    console.error('❌', error.message);
+    throw error;
+  }
+
   if (cached.conn) {
-                                                                                      console.log('🔄 Using existing database connection');
+    console.log('🔄 Using existing database connection');
     return cached.conn;
   }
 
@@ -23,25 +31,36 @@ const connectDB = async () => {
     const opts = {
       bufferCommands: false,
       maxPoolSize: 10,
-      serverSelectionTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 10000, // Increased timeout
       socketTimeoutMS: 45000,
     };
 
-    console.log('🔄 Creating new database connection...');
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      console.log('✅ MongoDB connected successfully');
-      return mongoose;
-    }).catch((error) => {
-      console.error('❌ MongoDB connection error:', error.message);
-      throw error;
-    });
+    console.log('🔄 Creating new database connection to:', MONGODB_URI.substring(0, 50) + '...');
+    
+    cached.promise = mongoose.connect(MONGODB_URI, opts)
+      .then((mongoose) => {
+        console.log('✅ MongoDB connected successfully');
+        return mongoose;
+      })
+      .catch((error) => {
+        console.error('❌ MongoDB connection error:', {
+          message: error.message,
+          name: error.name,
+          code: error.code
+        });
+        throw error;
+      });
   }
 
   try {
     cached.conn = await cached.promise;
   } catch (e) {
     cached.promise = null;
-    console.error('❌ Failed to connect to MongoDB:', e.message);
+    console.error('❌ Failed to connect to MongoDB:', {
+      message: e.message,
+      name: e.name,
+      stack: e.stack
+    });
     throw e;
   }
 
