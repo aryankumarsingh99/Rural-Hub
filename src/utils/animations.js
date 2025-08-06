@@ -1,6 +1,5 @@
 // src/utils/animations.js
-// Remove the MongoDB URI from here - it should only be in Vercel environment variables
-export const fadeInUp = {
+ export const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6 }

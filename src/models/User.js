@@ -45,4 +45,7 @@ const UserSchema = new mongoose.Schema({
   timestamps: true
 });
 
+// Create index for email
+UserSchema.index({ email: 1 });
+
 export default mongoose.models.User || mongoose.model('User', UserSchema);
